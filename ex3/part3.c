@@ -54,16 +54,76 @@ void RotateString(char str[], int moves, int dir) {
 
 // 2
 
-int CountWords(char mat[6][8], char word[][]) {
+#define ROWS 6
+#define COLS 8
 
+int checkRight(char mat[ROWS][COLS], int row, int col, char word[]) {
+    int length = strlen(word);
+
+    if (col + length > COLS)
+        return 0;
+
+    for (int i = 0; i < length; i++) {
+        if (mat[row][col+i] != word[i])
+            return 0;
+    }
+
+    return 1;
+}
+
+
+int checkDown(char mat[ROWS][COLS], int row, int col, char word[]) {
+    int length = strlen(word);
+
+    if (row + length > ROWS)
+        return 0;
+
+    for (int i = 0; i < length; i++) {
+        if (mat[row+i][col] != word[i])
+            return 0;
+    }
+
+    return 1;
+}
+
+
+int checkDiag(char mat[ROWS][COLS], int row, int col, char word[]) {
+    int length = strlen(word);
+
+    if (row + length > ROWS || col + length > COLS)
+        return 0;
+
+    for (int i = 0; i < length; i++) {
+        if (mat[row+i][col+i] != word[i])
+            return 0;
+    }
+
+    return 1;
+}
+
+int CountWords(char mat[ROWS][COLS], char word[]) {
+    int count = 0;
+
+    for (int r = 0; r < ROWS; r++) {
+        for (int c = 0; c < COLS; c++) {
+            count += checkRight(mat, r, c, word) + checkDown(mat, r, c, word) + checkDiag(mat, r, c, word);
+        }
+    }
+
+    return count;
 }
 
 int main() {
-    char str[9] = "refdeeae";
-
-    printf("Before: %s\n", str);
-    RotateString(str, 10, 1);
-    printf("After: %s", str);
+    char mat[6][8] = {
+        { 'a', 'w', 'o', 'r', 'd', 'b', 'c', 'w' },
+        { 'd', 'o', 'o', 'e', 'f', 'h', 'i', 'o' },
+        { 'j', 'r', 'k', 'r', 'w', 'l', 'w', 'r' },
+        { 'm', 'd', 'n', 'o', 'd', 'o', 'o', 'd' },
+        { 'p', 'q', 'r', 's', 'w', 'o', 'r', 'd' },
+        { 't', 'u', 'v', 'w', 'x', 'y', 'd', 'd' }
+    };
+    
+    printf("%d", CountWords(mat, "word"));
 
     return 0;
 }
