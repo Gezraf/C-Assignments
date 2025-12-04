@@ -78,7 +78,10 @@ int main() {
         scanf("%d", &Two[i]);
     }
 
+    printf("HistogramArray:\n");
     HistogramArray(One, N);
+
+    printf("\n\nPrintMaxPartAscending:\n");
     PrintMaxPartAscending(Two, M);
     return 0;
 }
