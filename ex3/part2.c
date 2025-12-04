@@ -4,16 +4,15 @@ Author: Guy Shitrit, ID: 330707761
 
 #include <stdio.h>
 #include <math.h>
-#define N 4
-#define SIZE 5
+#define SIZE 4
 
 
 //1
 
-void FindValleys(int mat[N][N]) {
+void FindValleys(int mat[SIZE][SIZE]) {
     int count = 0;
-    for (int i = 0; i < N; i++) {
-        for (int j = 0; j < N; j++) {
+    for (int i = 0; i < SIZE - 1; i++) {
+        for (int j = 0; j < SIZE - 1; j++) {
             int val = mat[i][j];
 
             if (val < mat[i-1][j] &&   // למעלה
@@ -103,18 +102,22 @@ int main() {
     for(int i = 0; i<SIZE; i++) {
         for (int j = 0; j<SIZE; j++) {
             printf("Enter a number to the matrix: ");
-            scanf("%d", &One[i][j]);
+            scanf(" %d", &One[i][j]);
         }
     }
 
-    printf("MaxSumDiagonal:\n");
+    printf("FindValleys:\n");
+    FindValleys(One);
+
+    printf("\n\nMaxSumDiagonal:\n");
     MaxSumDiagonal(One);
 
     printf("\n\nRotateMatrix90:\n");
-    printMatrix(One, SIZE); //  הדפסה לפני השינוי
-    RotateMatrix90(One);
+    printMatrix(One, SIZE); //  לפני השינוי
+
+    RotateMatrix90(One); // לאחר השינוי
     printf("\n");
-    printMatrix(One, SIZE); // הדפסה לאחר השינוי
+    printMatrix(One, SIZE);
 
     return 0;
 }
